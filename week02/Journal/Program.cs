@@ -8,6 +8,7 @@ namespace JournalApp
         {
             Journal myJournal = new Journal();
             PromptGenerator promptGenerator = new PromptGenerator();
+            TimerManager timerManager = new TimerManager();
             bool running = true;
 
             while (running)
@@ -17,7 +18,8 @@ namespace JournalApp
                 Console.WriteLine("2. Display");
                 Console.WriteLine("3. Load");
                 Console.WriteLine("4. Save");
-                Console.WriteLine("5. Quit");
+                Console.WriteLine("5. Display Elapsed Time");
+                Console.WriteLine("6. Quit");
                 Console.Write("\nWhat would you like to do: ");
                 string choice = Console.ReadLine();
 
@@ -49,6 +51,10 @@ namespace JournalApp
                         break;
 
                     case "5":
+                        timerManager.DisplayElapsedTime();
+                        break;
+
+                    case "6":
                         running = false;
                         break;
 
