@@ -6,9 +6,8 @@ namespace ScriptureMemorizer
     {
         static void Main(string[] args)
         {
-            Reference reference = new Reference("Proverbios", 3, 5, 6);
-            string text = "Confía en el Señor con todo tu corazón y no te apoyes en tu propio entendimiento.";
-            Scripture scripture = new Scripture(reference, text);
+            ScriptureLibrary library = new ScriptureLibrary();
+            Scripture scripture = library.GetRandomScripture();
 
             while (true)
             {
@@ -17,11 +16,11 @@ namespace ScriptureMemorizer
 
                 if (scripture.AllWordsHidden())
                 {
-                    Console.WriteLine("\nTodas las palabras han sido ocultadas. ¡Fin del programa!");
+                    Console.WriteLine("\nAll words have been hidden. End of program.");
                     break;
                 }
 
-                Console.WriteLine("\nPresiona ENTER para ocultar más palabras o escribe 'quit' para salir.");
+                Console.WriteLine("\nPress ENTER to continue or type 'quit' to finish.");
                 string input = Console.ReadLine().Trim().ToLower();
 
                 if (input == "quit")

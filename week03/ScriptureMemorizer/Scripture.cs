@@ -8,7 +8,6 @@ namespace ScriptureMemorizer
     {
         private Reference reference;
         private List<Word> words;
-        private Random rand = new Random();
 
         public Scripture(Reference reference, string text)
         {
@@ -21,23 +20,48 @@ namespace ScriptureMemorizer
             var visibleWords = words.Where(w => !w.IsHidden()).ToList();
             if (visibleWords.Count == 0) return;
 
-            for (int i = 0; i < count && visibleWords.Count > 0; i++)
-            {
-                int index = rand.Next(visibleWords.Count);
-                visibleWords[index].Hide();
-                visibleWords.RemoveAt(index);
-            }
-        }
+            Random rand = new Random();
+            int hidden = 0;
 
-        public bool AllWordsHidden()
-        {
-            return words.All(w => w.IsHidden());
+            while (hidden < count)
+            {
+                int index = rand.Next(words.Count);
+
+                if (!words[index].IsHidden())
+                {
+                    words[index].Hide();
+                    hidden++;
+                }
+            }
         }
 
         public string GetDisplayText()
         {
-            string verseText = string.Join(" ", words.Select(w => w.GetDisplayText()));
-            return $"{reference.GetDisplayText()}\n{verseText}";
+            string result = reference.GetDisplayText() + " - ";
+            foreach (Word word in words)
+            {
+                result += word.GetDisplayText() + " ";
+            }
+            return result.Trim();
+        }
+
+        public bool IsCompletelyHidden()
+        {
+            foreach (Word word in words)
+            {
+                if (!word.IsHidden())
+                    return false;
+            }
+            return true;
+        }
+        public bool AllWordsHidden()
+        {
+            foreach (Word word in words)
+            {
+                if (!word.IsHidden())
+                    return false;
+            }
+            return true;
         }
     }
 }
